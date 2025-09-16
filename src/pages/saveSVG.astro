@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+const pbUrl = import.meta.env.PB_URL || 'http://127.0.0.1:8090';
+const collection = 'code_svg';
+type SvgRecord = { id: string; prompt: string; svg: string };
+let records: SvgRecord[] = [];
+try {
+  const res = await fetch(`${pbUrl}/api/collections/${collection}/records?sort=-created`);
+  if (res.ok) {
+    const data = await res.json();
+    records = data.items || [];
+  }
+} catch (e) {
+  records = [];
+}
+---
+
+<Layout>
+    <a href ="/generate" class="btn btn-secondary">Retour au générateur</a>
+  <div class="max-w-4xl mx-auto p-8">
+    <h1 class="text-2xl font-bold mb-6">SVG sauvegardés</h1>
+    {records.length === 0 ? (
+      <div class="alert alert-info">Aucun SVG sauvegardé pour le moment.</div>
+    ) : (
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {records.map((rec) => (
+          <div class="card bg-base-100 shadow-md p-4">
+            <div class="mb-2 text-sm text-gray-500">{rec.prompt}</div>
+            <div class="bg-base-200 rounded p-4 mb-2 min-h-[120px] min-w-[120px] flex items-center justify-center">
+              <Fragment set:html={rec.svg} />
+            </div>
+            <pre class="bg-base-200 rounded p-2 text-xs overflow-x-auto"><code>{rec.svg}</code></pre>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</Layout>

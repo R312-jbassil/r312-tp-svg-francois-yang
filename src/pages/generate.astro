@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 <Layout>
+	<a href="/saveSVG" class="btn btn-secondary">Voir les SVG sauvegardés</a>	
     <div class="flex flex-col gap-8 p-8 max-w-4xl mx-auto">
 	<!-- Zone de saisie du prompt utilisateur -->
 	<div class="card bg-base-200 shadow-md p-6">
@@ -18,6 +19,7 @@ import Layout from '../layouts/Layout.astro';
 			<span class="label-text text-lg font-semibold">Code SVG généré :</span>
 		</label>
 	<pre class="bg-base-200 rounded p-4 overflow-x-auto text-sm"><code id="svg-output"></code></pre>
+	<button id="save-svg-button" class="btn btn-secondary w-full mt-4">Sauvegarder</button>
 	</div>
 
 	<!-- Affichage du SVG -->
@@ -59,11 +61,44 @@ import Layout from '../layouts/Layout.astro';
 	svgOutput.textContent = svgCode;
 	// Affiche le SVG généré dans le conteneur
 	svgContainer.innerHTML = svgCode || '<span class="text-error">Aucun SVG généré</span>';
-	generateButton.disabled = true;
+	generateButton.disabled = false;
 
 	}
-    const generateButton = document.getElementById("generate-button");
+	const generateButton = document.getElementById("generate-button");
 	if (generateButton) {
 		generateButton.addEventListener("click", handleSubmit);
+	}
+
+	// Ajout de la logique pour sauvegarder le SVG dans PocketBase
+	const saveButton = document.getElementById("save-svg-button");
+	if (saveButton) {
+		saveButton.addEventListener("click", async () => {
+			const promptElement = document.getElementById("user-prompt");
+			const svgOutput = document.getElementById("svg-output");
+			const prompt = promptElement ? promptElement.value : "";
+			const svg = svgOutput ? svgOutput.textContent : "";
+			if (!svg || !prompt) {
+				alert("Veuillez générer un SVG avant de sauvegarder.");
+				return;
+			}
+			saveButton.disabled = true;
+			saveButton.textContent = "Sauvegarde...";
+			try {
+				const res = await fetch('/api/saveSVG', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ prompt, svg }),
+				});
+				if (res.ok) {
+					alert("SVG sauvegardé avec succès !");
+				} else {
+					alert("Erreur lors de la sauvegarde du SVG.");
+				}
+			} catch (e) {
+				alert("Erreur réseau lors de la sauvegarde.");
+			}
+			saveButton.disabled = false;
+			saveButton.textContent = "Sauvegarder";
+		});
 	}
 </script>
