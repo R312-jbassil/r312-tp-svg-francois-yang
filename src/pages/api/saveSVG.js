@@ -16,7 +16,7 @@ export const POST = async ({ request }) => {
     const res = await fetch(`${pbUrl}/api/collections/${collection}/records`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, svg }),
+      body: JSON.stringify({ prompt, svg_code: svg }),
     });
 
     if (!res.ok) {
