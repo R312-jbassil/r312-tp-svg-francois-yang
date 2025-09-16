@@ -59,7 +59,7 @@ import Layout from '../layouts/Layout.astro';
 	svgOutput.textContent = svgCode;
 	// Affiche le SVG généré dans le conteneur
 	svgContainer.innerHTML = svgCode || '<span class="text-error">Aucun SVG généré</span>';
-	generateButton.disabled = false;
+	generateButton.disabled = true;
 
 	}
     const generateButton = document.getElementById("generate-button");
