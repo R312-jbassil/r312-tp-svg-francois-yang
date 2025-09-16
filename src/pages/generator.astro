@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout>
+    <div class="flex flex-col gap-8 p-8 max-w-4xl mx-auto">
+	<!-- Zone de saisie du prompt utilisateur -->
+	<div class="card bg-base-200 shadow-md p-6">
+		<label class="label">
+			<span class="label-text text-lg font-semibold">Entrez votre prompt :</span>
+		</label>
+		<textarea class="textarea textarea-bordered w-full min-h-[100px] mb-4" placeholder="Décrivez le SVG à générer..."></textarea>
+		<button class="btn btn-primary w-full">Générer</button>
+	</div>
+
+	<!-- Affichage du code généré -->
+	<div class="card bg-base-100 shadow-md p-6">
+		<label class="label">
+			<span class="label-text text-lg font-semibold">Code SVG généré :</span>
+		</label>
+		<pre class="bg-base-200 rounded p-4 overflow-x-auto text-sm"><code>
+</svg>
+</code></pre>
+	</div>
+
+	<!-- Affichage du SVG -->
+	<div class="card bg-base-100 shadow-md p-6 flex flex-col items-center">
+		<label class="label mb-2">
+			<span class="label-text text-lg font-semibold">Aperçu du SVG :</span>
+		</label>
+		<div class="bg-base-200 rounded p-4 flex items-center justify-center min-h-[120px] min-w-[120px]">
+			
+
+		</div>
+	</div>
+</div>
+</Layout>
