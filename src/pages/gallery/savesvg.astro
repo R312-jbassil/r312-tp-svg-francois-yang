@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 const pbUrl = import.meta.env.PB_URL || 'http://127.0.0.1:8090';
-const collection = 'code_svg';
+const collection = 'Svg';
 type SvgRecord = { id: string; prompt: string; svg: string };
 type SvgRecord = { id: string; prompt: string; svg_code: string };
 let records: SvgRecord[] = [];
@@ -28,9 +28,9 @@ try {
           <div class="card bg-base-100 shadow-md p-4">
             <div class="mb-2 text-sm text-gray-500">{rec.prompt}</div>
               <div class="bg-base-200 rounded p-4 mb-2 min-h-[120px] min-w-[120px] flex items-center justify-center">
-                <Fragment set:html={rec.svg_code} />
+                <Fragment set:html={rec.code_svg} />
               </div>
-              <pre class="bg-base-200 rounded p-2 text-xs overflow-x-auto"><code>{rec.svg_code}</code></pre>
+              <pre class="bg-base-200 rounded p-2 text-xs overflow-x-auto"><code>{rec.code_svg}</code></pre>
           </div>
         ))}
       </div>
