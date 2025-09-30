@@ -10,12 +10,12 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
-    "astro": "^5.13.5",
+    "astro": "^5.14.1",
     "daisyui": "^5.1.12",
     "openai": "^5.20.3",
     "tailwindcss": "^4.1.13"
   },
   "devDependencies": {
-    "@astrojs/netlify": "^6.5.10"
+    "@astrojs/netlify": "^6.5.11"
   }
 }
